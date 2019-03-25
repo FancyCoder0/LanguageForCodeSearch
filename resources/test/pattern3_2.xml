@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C++" filename="pattern3_2.cpp">
+    <expr><abs></abs><name>a</name> <operator>&gt;</operator> <literal type="number"><abs>0</abs></literal> <abs></abs></expr>
+</unit>
