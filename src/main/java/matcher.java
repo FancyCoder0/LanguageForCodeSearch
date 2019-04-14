@@ -1,11 +1,23 @@
-package l4cs;
-
 import org.dom4j.*;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-public class worker {
+public class matcher {
+    Map<String, List<Element>> UDFContent = new HashMap<String, List<Element>>();
 
+    public void addVariable(Element r) {
+//        System.out.println("addVariable");
+        for (Element v : r.elements()) {
+            String name = v.getName();
+            if (name.startsWith("v-")) {
+                UDFContent.put(name, v.elements());
+            }
+
+        }
+    }
     public Boolean match(Element srcRoot, Element patRoot) {
         QName a = srcRoot.getQName(), b = patRoot.getQName();
         String aName = a.getName(), bName = b.getName();
@@ -13,13 +25,27 @@ public class worker {
 //        if (bName.equals("abs")) {
 //            return true;
 //        }
+        if (bName.equals("udv")) {
+            return match(srcRoot, patRoot.elements().get(0));
+        }
+        if (UDFContent.containsKey(bName)) {
+            for (Element x : UDFContent.get(bName)) {
+                if (match(srcRoot, x)) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         if (aName != bName) {
             return false;
         }
 
         //if (srcRoot.isTextOnly()) {
-        if (patRoot.isTextOnly()) {
+        if (patRoot.elements().size() == 0) {
+            if (patRoot.elements().size() != 0) {
+                return false;
+            }
             if (!srcRoot.getStringValue().equals(patRoot.getStringValue())) {
 //                System.out.println(srcRoot.getStringValue());
 //                System.out.println("-----");
@@ -82,10 +108,9 @@ public class worker {
         int cnt = -1;
         for (Element c : candid) {
             cnt += 1;
-//            if (cnt != 41) {
-//                continue;
-//            }
-//            System.out.println(cnt + ":" + c.getQName().getName());
+
+            // System.out.println(cnt + ":" + c.getQName().getName());
+
             if (match(c, patRoot)) {
 //                System.out.println("Successful Match!");
 //                System.out.println("----Pattern----");
