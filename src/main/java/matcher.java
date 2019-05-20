@@ -1,9 +1,6 @@
 import org.dom4j.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class matcher {
     Map<String, List<Element>> UDFContent = new HashMap<String, List<Element>>();
@@ -15,9 +12,47 @@ public class matcher {
             if (name.startsWith("v-")) {
                 UDFContent.put(name, v.elements());
             }
-
         }
     }
+
+    public void prettyPatternWork(Element patEle) {
+        if (patEle.getQName().getName().equals("abs")) {
+            patEle.setText("[ABS]");
+        } else if (patEle.getQName().getName().startsWith("v-")) {
+            String UDFName = patEle.getQName().getName();
+            if (UDFContent.containsKey(UDFName)) {
+                String UDFString = "";
+                boolean first = true, haveChoice = false;
+                for (Element x : UDFContent.get(UDFName)) {
+                    prettyPatternWork(x); // (TODO) could be opt.
+                    if (first) {
+                        first = false;
+                    } else {
+                        haveChoice = true;
+                        UDFString += "|";
+                    }
+                    UDFString += x.getStringValue();
+                }
+                if (haveChoice) {
+                    UDFString = "(" + UDFString + ")";
+                }
+                patEle.setText(UDFString);
+            }
+        } else {
+            for (Iterator i = patEle.elementIterator(); ((Iterator) i).hasNext(); ) {
+                Element x = (Element) i.next();
+                prettyPatternWork(x);
+            }
+        }
+    }
+
+    public String prettyPattern(Document d) {
+        Document tmp = (Document)d.clone();
+        Element tmpRoot = tmp.getRootElement().elements().get(0);
+        prettyPatternWork(tmpRoot);
+        return tmpRoot.getStringValue().replace("\n", "").replaceAll(" +"," ");
+    }
+
     public Boolean match(Element srcRoot, Element patRoot) {
         QName a = srcRoot.getQName(), b = patRoot.getQName();
         String aName = a.getName(), bName = b.getName();
@@ -115,6 +150,8 @@ public class matcher {
 //                System.out.println("Successful Match!");
 //                System.out.println("----Pattern----");
 //                System.out.println(patRoot.getStringValue());
+//                System.out.println(cnt + ":" + c.getQName().getName());
+
                 System.out.println("----Match Code----");
                 System.out.println(c.getStringValue());
             }

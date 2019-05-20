@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C++" filename="p4.cpp">
+    <expr>
+        <abs></abs>
+        <v-hasf></v-hasf>
+        <abs></abs>
+    </expr>
+
+    <var>
+        <v-hasf1>
+            <call>
+                <abs></abs>
+                <name>f</name>
+                <argument_list>()</argument_list>
+            </call>
+        </v-hasf1>
+
+        <v-hasf2>
+            <call>
+                <abs></abs>
+                <name>
+                    <abs></abs>
+                    <name>f</name>
+                </name>
+                <argument_list>()</argument_list>
+            </call>
+        </v-hasf2>
+
+        <v-hasf>
+            <udv>
+                <v-hasf1></v-hasf1>
+            </udv>
+            <udv>
+                <v-hasf2></v-hasf2>
+            </udv>
+        </v-hasf>
+    </var>
+
+
+</unit>
+

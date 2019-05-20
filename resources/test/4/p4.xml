@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C++" filename="p4.cpp">
+
+    <v-f3> </v-f3>
+
+    <var>
+        <v-f1>
+            <call>
+                <name>f</name>
+                <argument_list>()</argument_list>
+            </call>
+        </v-f1>
+
+        <v-f2>
+            <call>
+                <name>
+                    <abs> </abs>
+                    <name>f</name>
+                </name>
+                <argument_list>()</argument_list>
+            </call>
+        </v-f2>
+
+        <v-f3>
+            <udv>
+                <v-f1></v-f1>
+            </udv>
+            <udv>
+                <v-f2></v-f2>
+            </udv>
+        </v-f3>
+    </var>
+</unit>
+
