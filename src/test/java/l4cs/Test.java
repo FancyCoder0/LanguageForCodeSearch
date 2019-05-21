@@ -12,7 +12,7 @@ public class Test {
     public final static String TEST_RES_DIR = HOME + SEP + "resources" + SEP + "test";
 
     @org.junit.Test
-    public void test_main() {
+    public void test_main() throws Exception {
         for (int i = 1; i <= 4; ++i) {
             Document srcDoc = Util.readXML(TEST_RES_DIR + SEP + i + SEP + "src.xml");
 
