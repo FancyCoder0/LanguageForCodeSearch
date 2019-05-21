@@ -35,6 +35,6 @@
     }</block></else></if>
 
 }</block></function>
-<function><type><name>int</name></type> <name>main</name><parameter_list>()</parameter_list> <block>{
+<function><type><name>int</name></type> <name>l4cs.Main</name><parameter_list>()</parameter_list> <block>{
 
 }</block></function></unit>

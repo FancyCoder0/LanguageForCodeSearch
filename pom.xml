@@ -6,9 +6,19 @@
 
     <groupId>pku</groupId>
     <artifactId>LanguageForCodeSearch</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
 
-    <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+    <properties>
+        <file.encodings>UTF-8</file.encodings>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>1.8</java.target.version>
+        <project.source.dir>${basedir}/src/l4cs.main/java</project.source.dir>
+        <project.l4cs.Test.dir>${basedir}/src/l4cs.Test/java</project.l4cs.Test.dir>
+        <project.build.base>${basedir}/target</project.build.base>
+        <project.build.src>${project.build.base}/classes</project.build.src>
+        <project.build.l4cs.Test>${project.build.base}/l4cs.Test-classes</project.build.l4cs.Test>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.dom4j</groupId>
@@ -19,9 +29,89 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
+            <scope>l4cs.Test</scope>
         </dependency>
     </dependencies>
+
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <directory>${basedir}/artifacts</directory>
+        <defaultGoal>compile</defaultGoal>
+
+        <sourceDirectory>${project.source.dir}</sourceDirectory>
+        <testSourceDirectory>${project.l4cs.Test.dir}</testSourceDirectory>
+
+        <outputDirectory>${project.build.src}</outputDirectory>
+        <testOutputDirectory>${project.build.l4cs.Test}</testOutputDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <configuration>
+                    <skipTests>
+                        true
+                    </skipTests>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadeTestJar>false</shadeTestJar>
+                            <shadedClassifierName>runnable</shadedClassifierName>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>l4cs.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
 
 
 

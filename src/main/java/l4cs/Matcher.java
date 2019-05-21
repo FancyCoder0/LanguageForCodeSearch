@@ -1,11 +1,13 @@
+package l4cs;
+
 import org.dom4j.*;
 
 import java.util.*;
 
-public class matcher {
-    Map<String, List<Element>> UDFContent = new HashMap<String, List<Element>>();
+public class Matcher {
+    Map<String, List<Element>> UDFContent = null;
 
-    public void addVariable(Element r) {
+    private void addVariable(Element r) {
 //        System.out.println("addVariable");
         for (Element v : r.elements()) {
             String name = v.getName();
@@ -14,6 +16,18 @@ public class matcher {
             }
         }
     }
+
+    private Element initPattern(Document pat) {
+        List<Element> patParts = pat.getRootElement().elements();
+        Element patRoot = patParts.get(0);
+        UDFContent = new HashMap<String, List<Element>>();
+        if (patParts.size() > 1) {
+            Element varEle = patParts.get(1);
+            addVariable(varEle);
+        }
+        return patRoot;
+    }
+
 
     public void prettyPatternWork(Element patEle) {
         if (patEle.getQName().getName().equals("abs")) {
@@ -48,7 +62,7 @@ public class matcher {
 
     public String prettyPattern(Document d) {
         Document tmp = (Document)d.clone();
-        Element tmpRoot = tmp.getRootElement().elements().get(0);
+        Element tmpRoot = initPattern(tmp);
         prettyPatternWork(tmpRoot);
         return tmpRoot.getStringValue().replace("\n", "").replaceAll(" +"," ");
     }
@@ -136,28 +150,29 @@ public class matcher {
         return allSubNode;
     }
 
-    public void tryMatch(Element srcRoot, Element patRoot) {
-        List<Element> candid = getAllSubNode(srcRoot);
-        // System.out.println(candid.size());
+    public List<Document> tryMatch(Document src, List<Document> patList) {
+        List<Element> candid = getAllSubNode(src.getRootElement());
 
-        int cnt = -1;
-        for (Element c : candid) {
-            cnt += 1;
+        for (Document pat : patList) {
+            Element patRoot = initPattern(pat);
 
-            // System.out.println(cnt + ":" + c.getQName().getName());
-
-            if (match(c, patRoot)) {
-//                System.out.println("Successful Match!");
-//                System.out.println("----Pattern----");
-//                System.out.println(patRoot.getStringValue());
-//                System.out.println(cnt + ":" + c.getQName().getName());
-
-                System.out.println("----Match Code----");
-                System.out.println(c.getStringValue());
+            List<Element> newCandid = new LinkedList<Element>();
+            int cnt = -1;
+            for (Element c : candid) {
+                cnt += 1;
+                if (match(c, patRoot)) {
+                    newCandid.add(c);
+                }
             }
+            candid = newCandid;
         }
 
+        List<Document> ret = new LinkedList<Document>();
+        for (Element c : candid) {
+            ret.add(DocumentHelper.createDocument(c.createCopy()));
+        }
 
+        return ret;
     }
 
 
