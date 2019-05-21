@@ -7,16 +7,10 @@ import org.dom4j.io.SAXReader;
 import java.io.File;
 
 public class Util {
-    public static Document readXML(String fileName) {
+    public static Document readXML(String fileName) throws Exception {
         SAXReader reader = new SAXReader();
         File file = new File(fileName);
-        Document document = null;
-        try {
-            document = reader.read(file);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-            System.err.println("can't read xml!");
-        }
+        Document document = reader.read(file);
         return document;
     }
 }

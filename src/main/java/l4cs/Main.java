@@ -22,7 +22,7 @@ public class Main {
         for (Document c : ret) {
             System.out.println(c.getStringValue());
         }
-        System.out.println("------------Finish------------");
+        System.out.println("----Finish----");
     }
 
     static void search(Document srcDoc, Document patternDoc) {
@@ -47,14 +47,22 @@ public class Main {
                 continue;
             }
             String type = arr[0], arg = arr[1];
-            // TODO(rly) null checker
             if (type.equals("add")) {
-                patterns.add(Util.readXML(arg));
-                System.out.println("Add pattern successfully!");
+                try {
+                    Document patDoc = Util.readXML(arg);
+                    patterns.add(patDoc);
+                    System.out.println("Add pattern successfully!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             if (type.equals("apply")) {
-                Document srcDoc = Util.readXML(arg);
-                search(srcDoc, patterns);
+                try {
+                    Document srcDoc = Util.readXML(arg);
+                    search(srcDoc, patterns);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
