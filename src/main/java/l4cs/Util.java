@@ -7,6 +7,8 @@ import org.dom4j.io.SAXReader;
 import java.io.File;
 
 public class Util {
+    public final static char SEP = File.separatorChar;
+
     public static Document readXML(String fileName) throws Exception {
         SAXReader reader = new SAXReader();
         File file = new File(fileName);

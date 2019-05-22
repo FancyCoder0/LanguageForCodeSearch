@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class Main {
     static List<Document> patterns = new LinkedList<Document>();
+    static String localPath = null;
 
     static void search(Document srcDoc, List<Document> patternDocList) {
         Matcher w = new Matcher();
@@ -40,30 +41,50 @@ public class Main {
         Scanner in = new Scanner(System.in);
         while (true) {
             String s = in.nextLine();
-            String[] arr = s.split(" ");
+            String[] arg = s.split(" ");
 
-            if (arr.length != 2) {
-                System.err.println("Input Error!");
+            String type = arg[0];
+
+            if (type.equals("reset")) {
+                localPath = null;
+                patterns = new LinkedList<Document>();
+                System.out.println("Reset successfully!");
                 continue;
             }
-            String type = arr[0], arg = arr[1];
+
+            if (type.equals("clear")) {
+                patterns = new LinkedList<Document>();
+                System.out.println("Clear all patterns successfully!");
+                continue;
+            }
+
+            if (type.equals("setpath")) {
+                localPath = arg[1];
+                System.out.println("Current path:" + localPath);
+                continue;
+            }
+
             if (type.equals("add")) {
+                String filePath = (localPath == null) ? arg[1] : localPath + Util.SEP + arg[1];
                 try {
-                    Document patDoc = Util.readXML(arg);
+                    Document patDoc = Util.readXML(filePath);
                     patterns.add(patDoc);
                     System.out.println("Add pattern successfully!");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+
             if (type.equals("apply")) {
+                String filePath = (localPath == null) ? arg[1] : localPath + Util.SEP + arg[1];
                 try {
-                    Document srcDoc = Util.readXML(arg);
+                    Document srcDoc = Util.readXML(filePath);
                     search(srcDoc, patterns);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+
         }
     }
 }
