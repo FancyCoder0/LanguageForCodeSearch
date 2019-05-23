@@ -11,7 +11,7 @@
             <call>
                 <abs></abs>
                 <name>f</name>
-                <argument_list>()</argument_list>
+                <abs></abs>
             </call>
         </v-hasf1>
 
@@ -21,8 +21,9 @@
                 <name>
                     <abs></abs>
                     <name>f</name>
+                    <abs></abs>
                 </name>
-                <argument_list>()</argument_list>
+                <abs></abs>
             </call>
         </v-hasf2>
 

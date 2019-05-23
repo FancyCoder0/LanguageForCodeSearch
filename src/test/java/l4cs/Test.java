@@ -12,22 +12,18 @@ public class Test {
     public final static String TEST_RES_DIR = HOME + SEP + "resources" + SEP + "test";
 
     @org.junit.Test
-    public void test_main() throws Exception {
+    public void test_all() throws Exception {
         for (int i = 1; i <= 4; ++i) {
             Document srcDoc = Util.readXML(TEST_RES_DIR + SEP + i + SEP + "src.xml");
 
-            List<Document> patternDocs = new LinkedList<Document>();
             for (int pNum = 1; ; ++pNum) {
+                System.out.println("TestCase:" + i + "," + pNum);
                 String patternXML = TEST_RES_DIR + SEP + i + SEP + "p" + pNum + ".xml";
                 if (new File(patternXML).exists()) {
-                    patternDocs.add(Util.readXML(patternXML));
+                    Main.search(srcDoc, Util.readXML(patternXML));
                 } else {
                     break;
                 }
-            }
-
-            for (Document patternDoc : patternDocs) {
-                Main.search(srcDoc, patternDoc);
             }
         }
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C++" filename="p4.cpp">
+    <expr>
+        <abs></abs>
+        <v-hasf></v-hasf>
+        <abs></abs>
+    </expr>
+
+    <var>
+        <v-hasf>
+            <call>
+                <abs></abs>
+                <annotation-folding>
+                    <name>f</name>
+                </annotation-folding>
+                <abs></abs>
+            </call>
+        </v-hasf>
+    </var>
+    
+</unit>
+

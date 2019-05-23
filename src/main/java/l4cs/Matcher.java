@@ -30,14 +30,14 @@ public class Matcher {
 
 
     public void prettyPatternWork(Element patEle) {
-        if (patEle.getQName().getName().equals("abs")) {
+        String patName = patEle.getQName().getName();
+        if (patName.equals("abs")) {
             patEle.setText("[ABS]");
-        } else if (patEle.getQName().getName().startsWith("v-")) {
-            String UDFName = patEle.getQName().getName();
-            if (UDFContent.containsKey(UDFName)) {
+        } else if (patName.startsWith("v-")) {
+            if (UDFContent.containsKey(patName)) {
                 String UDFString = "";
                 boolean first = true, haveChoice = false;
-                for (Element x : UDFContent.get(UDFName)) {
+                for (Element x : UDFContent.get(patName)) {
                     prettyPatternWork(x); // (TODO) could be opt.
                     if (first) {
                         first = false;
@@ -53,6 +53,9 @@ public class Matcher {
                 patEle.setText(UDFString);
             }
         } else {
+            if (patName.equals("annotation-folding")) {
+                patEle.setText("[FOLD]");
+            }
             for (Iterator i = patEle.elementIterator(); ((Iterator) i).hasNext(); ) {
                 Element x = (Element) i.next();
                 prettyPatternWork(x);
@@ -77,6 +80,17 @@ public class Matcher {
         if (bName.equals("udv")) {
             return match(srcRoot, patRoot.elements().get(0));
         }
+
+        if (bName.equals("annotation-folding")) {
+            List<Element> subNodes = getAllSubNode(srcRoot);
+            for (Element subNode : subNodes) {
+                if (match(subNode, patRoot.elements().get(0))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         if (UDFContent.containsKey(bName)) {
             for (Element x : UDFContent.get(bName)) {
                 if (match(srcRoot, x)) {
@@ -144,6 +158,7 @@ public class Matcher {
             tour(child, l);
         }
     }
+
     public List<Element> getAllSubNode(Element ele) {
         List<Element> allSubNode = new LinkedList<Element>();
         tour(ele, allSubNode);
