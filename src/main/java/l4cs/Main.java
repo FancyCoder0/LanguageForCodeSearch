@@ -20,7 +20,10 @@ public class Main {
             System.out.println(w.prettyPattern(patternDoc));
         }
         System.out.println("----Match Code----");
+        int matchCnt = 0;
         for (Document c : ret) {
+            matchCnt += 1;
+            System.out.println("Match #" + matchCnt);
             System.out.println(c.getStringValue());
         }
         System.out.println("----Finish----");
@@ -75,7 +78,7 @@ public class Main {
                 }
             }
 
-            if (type.equals("apply")) {
+            if (type.equals("search")) {
                 String filePath = (localPath == null) ? arg[1] : localPath + Util.SEP + arg[1];
                 try {
                     Document srcDoc = Util.readXML(filePath);

@@ -61,7 +61,7 @@ public class Matcher {
                 patEle.setText(UDFString);
             }
         } else {
-            if (patName.equals("annotation-folding")) {
+            if (patName.equals("fold")) {
                 patEle.setText("[FOLD]");
             }
             for (Iterator i = patEle.elementIterator(); ((Iterator) i).hasNext(); ) {
@@ -89,7 +89,7 @@ public class Matcher {
             return match(srcRoot, patRoot.elements().get(0));
         }
 
-        if (bName.equals("annotation-folding")) {
+        if (bName.equals("fold")) {
             List<Element> subNodes = getAllSubNode(srcRoot);
             for (Element subNode : subNodes) {
                 if (match(subNode, patRoot.elements().get(0))) {

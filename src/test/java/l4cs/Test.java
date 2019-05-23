@@ -28,4 +28,18 @@ public class Test {
             }
         }
     }
+
+    @org.junit.Test
+    public void test_single() throws Exception {
+        int i = 4;
+        int pNum = 7;
+
+        System.out.println("TestCase:" + i + "," + pNum);
+
+        Document srcDoc = Util.readXML(TEST_RES_DIR + SEP + 4 + SEP + "src.xml");
+        String patternXML = TEST_RES_DIR + SEP + i + SEP + "p" + pNum + ".xml";
+
+        Main.search(srcDoc, Util.readXML(patternXML));
+
+    }
 }
