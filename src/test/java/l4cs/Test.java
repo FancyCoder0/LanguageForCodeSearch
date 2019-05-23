@@ -19,6 +19,7 @@ public class Test {
             for (int pNum = 1; ; ++pNum) {
                 System.out.println("TestCase:" + i + "," + pNum);
                 String patternXML = TEST_RES_DIR + SEP + i + SEP + "p" + pNum + ".xml";
+
                 if (new File(patternXML).exists()) {
                     Main.search(srcDoc, Util.readXML(patternXML));
                 } else {

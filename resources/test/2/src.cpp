@@ -6,6 +6,12 @@ void open() {
 void close() {
 }
 
+void open(int x) {
+}
+
+void close(int x) {
+}
+
 void f() {
     int a = 1;
     if (a > 0) {
@@ -29,8 +35,16 @@ void f() {
         int q = 1;
         open();
         int z = 3;
+    } else if (a > 3) {
+        int tmp = 1;
+        open(tmp);
+        int tmp2 = 2;
+        close(tmp);
     } else {
-
+        int tmp = 1;
+        open(tmp);
+        int tmp2 = 2;
+        close(tmp2);
     }
 
 }

@@ -6,6 +6,8 @@ import java.util.*;
 
 public class Matcher {
     Map<String, List<Element>> UDFContent = null;
+    Set<String> bindUDF = null;
+    Map<String, String> UDFmatchBind = null;
 
     private void addVariable(Element r) {
 //        System.out.println("addVariable");
@@ -14,6 +16,11 @@ public class Matcher {
             if (name.startsWith("v-")) {
                 UDFContent.put(name, v.elements());
             }
+            if (v.attribute("bind") != null) {
+                if (v.attribute("bind").getValue().equals("true")) {
+                    bindUDF.add(name);
+                }
+            }
         }
     }
 
@@ -21,6 +28,7 @@ public class Matcher {
         List<Element> patParts = pat.getRootElement().elements();
         Element patRoot = patParts.get(0);
         UDFContent = new HashMap<String, List<Element>>();
+        bindUDF = new HashSet<String>();
         if (patParts.size() > 1) {
             Element varEle = patParts.get(1);
             addVariable(varEle);
@@ -29,7 +37,7 @@ public class Matcher {
     }
 
 
-    public void prettyPatternWork(Element patEle) {
+    private void prettyPatternWork(Element patEle) {
         String patName = patEle.getQName().getName();
         if (patName.equals("abs")) {
             patEle.setText("[ABS]");
@@ -70,7 +78,7 @@ public class Matcher {
         return tmpRoot.getStringValue().replace("\n", "").replaceAll(" +"," ");
     }
 
-    public Boolean match(Element srcRoot, Element patRoot) {
+    private Boolean match(Element srcRoot, Element patRoot) {
         QName a = srcRoot.getQName(), b = patRoot.getQName();
         String aName = a.getName(), bName = b.getName();
 
@@ -92,8 +100,15 @@ public class Matcher {
         }
 
         if (UDFContent.containsKey(bName)) {
+            if (UDFmatchBind.containsKey(bName)) {
+                return UDFmatchBind.get(bName).equals(srcRoot.getStringValue());
+            }
+
             for (Element x : UDFContent.get(bName)) {
                 if (match(srcRoot, x)) {
+                    if (bindUDF.contains(bName)) {
+                        UDFmatchBind.put(bName, srcRoot.getStringValue());
+                    }
                     return true;
                 }
             }
@@ -104,17 +119,22 @@ public class Matcher {
             return false;
         }
 
-        //if (srcRoot.isTextOnly()) {
-        if (patRoot.elements().size() == 0) {
-            if (patRoot.elements().size() != 0) {
-                return false;
+        // Case: srcRoot is a leaf node, another sol:
+        // if (srcRoot.isTextOnly()) {
+        if (srcRoot.elements().size() == 0) {
+            if (patRoot.elements().size() == 0) {
+                //                System.out.println(srcRoot.getStringValue());
+                //                System.out.println("-----");
+                //                System.out.println(patRoot.getStringValue());
+                if (srcRoot.getStringValue().equals(patRoot.getStringValue())) {
+                    return true;
+                }
+            } else if (patRoot.elements().size() == 1) {
+                if (patRoot.elements().get(0).getQName().getName().equals("abs")) {
+                    return true;
+                }
             }
-            if (!srcRoot.getStringValue().equals(patRoot.getStringValue())) {
-//                System.out.println(srcRoot.getStringValue());
-//                System.out.println("-----");
-//                System.out.println(patRoot.getStringValue());
-                return false;
-            }
+            return false;
         }
 
         // compare on subtree
@@ -152,14 +172,14 @@ public class Matcher {
     }
 
 
-    public void tour(Element ele, List<Element> l) {
+    private void tour(Element ele, List<Element> l) {
         l.add(ele);
         for (Element child : ele.elements()) {
             tour(child, l);
         }
     }
 
-    public List<Element> getAllSubNode(Element ele) {
+    private List<Element> getAllSubNode(Element ele) {
         List<Element> allSubNode = new LinkedList<Element>();
         tour(ele, allSubNode);
         return allSubNode;
@@ -175,7 +195,11 @@ public class Matcher {
             int cnt = -1;
             for (Element c : candid) {
                 cnt += 1;
+
+                UDFmatchBind = new HashMap<String, String>();
+
                 if (match(c, patRoot)) {
+//                    System.out.println("match:" + cnt);
                     newCandid.add(c);
                 }
             }
