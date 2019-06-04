@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit>
+    <expr>
+        <abs></abs>
+        <fold>
+            <name>f</name>
+        </fold>
+        <abs></abs>
+    </expr>
+</unit>
+

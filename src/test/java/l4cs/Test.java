@@ -32,7 +32,7 @@ public class Test {
     @org.junit.Test
     public void test_single() throws Exception {
         int i = 4;
-        int pNum = 7;
+        int pNum = 2;
 
         System.out.println("TestCase:" + i + "," + pNum);
 

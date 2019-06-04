@@ -35,8 +35,6 @@ public class Main {
         search(srcDoc, patternDocList);
     }
 
-
-    // TODO (p4_6.xml) do folder.
     public static void main(String[] args) {
         System.out.println("-----Language For Code Search-----");
         System.out.flush();
@@ -80,6 +78,22 @@ public class Main {
 
             if (type.equals("search")) {
                 String filePath = (localPath == null) ? arg[1] : localPath + Util.SEP + arg[1];
+                String suffix = filePath.substring(filePath.lastIndexOf(".") + 1);
+
+                if (!suffix.equals("xml")) {
+                    // use docker to run srcML, need to config when run on other machine.
+                    if (!new File(filePath+".xml").exists()) {
+                        String[] cmd = new String[]{"python", "/Users/luyaoren/LanguageForCodeSearch/resources/test/getxml.py", filePath};
+                        try {
+                            Process pro = Runtime.getRuntime().exec(cmd);
+                            pro.waitFor();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    filePath = filePath + ".xml";
+                }
+
                 try {
                     Document srcDoc = Util.readXML(filePath);
                     search(srcDoc, patterns);
