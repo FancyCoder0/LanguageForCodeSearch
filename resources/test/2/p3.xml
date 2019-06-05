@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C++" filename="pattern2.cpp">
+<unit>
     <block>{
         <abs></abs>
-        <expr_stmt><expr><call><name>open</name><argument_list>(<argument><expr><v-v1></v-v1></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt>
+            <expr>
+                <call>
+                    <name>open</name>
+                    <argument_list>
+                        (<argument><expr><v-v1></v-v1></expr></argument>)
+                    </argument_list>
+                </call>
+            </expr>;</expr_stmt>
         <abs></abs>
-        <expr_stmt><expr><call><name>close</name><argument_list>(<argument><expr><v-v1></v-v1></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt>
+            <expr>
+                <call>
+                    <name>close</name>
+                    <argument_list>(<argument><expr><v-v1></v-v1></expr></argument>)</argument_list>
+                </call>
+            </expr>;
+        </expr_stmt>
         <abs></abs>
-    }</block>
+        }</block>
 
     <var>
         <v-v1 bind="true">
