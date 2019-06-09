@@ -1,8 +1,24 @@
-# LanguageForCodeSearch
+# Language For Code Search
 
-任路遥 1500012787
 
-王文涛 1600012719
+
+<h3 align = "center">《编程语言的设计原理》课程大作业</h3>
+<h5 align = "center">任路遥 1500012787</h5>	
+<h5 align = "center">王文涛 1600012719</h5>
+
+
+
+
+
+
+
+​																				
+
+​																				
+
+
+
+
 
 ## 设计目标
 
@@ -12,7 +28,7 @@
 
 1. 没有考虑对应程序语言的语法。搜索时如果用户不加以约束会得到许多语法上无关的片段。比如用户想要找到所有函数`a`出现的地方，然而单纯的字符串匹配会同时找出所有包含`a`这个字符的地方。用户为了剔除这些无关的结果必须使用更多的技巧来加以限制（如加上`\b`）。
 2. 难以处理超出正则语言表达能力的要求。比如用户要求查找`open($var); ... close($var);`的片段，其中两处`$var`要求相同。这就超出了正则语言的表达能力。
-3. 缺乏对不同层次的抽象。如考虑表达式`a > 0`，其对应有不同程度的抽象，如I. 包含运算符 >，形如`expr1 > expr2` II. 包含变量`a`和运算符`>`，形如  `a > #expr` III. 包含变量`a`和运算符`>`，且等号右边为数字, `a > #num` 等等。
+3. 缺乏对不同层次的抽象。如考虑表达式`a > 0`，其对应有不同程度的抽象，如I. 包含运算符 >，形如`#expr1 > #expr2` II. 包含变量`a`和运算符`>`，形如  `a > #expr` III. 包含变量`a`和运算符`>`，且等号右边为数字, `a > #num` 等等。
 
 这些缺点在实际生产过程中比较普遍。
 
@@ -62,6 +78,8 @@ variableDefinitions ::= <var> {variableDefinition} </var>
 variableDefinition ::= <v-$varName [bind="true"]> (code | {<udv> code </udv>}) </v-$varName>
 ```
 
+
+
 Evaluation: (`mu` for variable binding history)
 
 ```
@@ -69,41 +87,49 @@ source_text == pattern_text | mu
 --------------------------------
 match(source_text, pattern_text) | mu
 
+
 match(source_code1, pattern_code1)  match(source_code2, pattern_code2) | mu
 ---------------------------------------------------------------------------
 match(source_code1 source_code2, pattern_code1 pattern_code2) | mu
 
+
 match(source_code, pattern_code) | mu
------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 match(<SomeElement> source_code </SomeElement>, <SomeElement> pattern_code </SomeElement>) | mu
+
 
 -------------------------------------
 match(source_code, <abs> </abs>) | mu
+
 
 match(source_code, pattern_code) | mu
 ----------------------------------------------------
 match(source_code, <fold> pattern_code </fold>) | mu
 
+
 match(sub_source_code, <fold> pattern_code </fold>), sub_source_code in source_code | mu
 ----------------------------------------------------------------------------------------
 match(source_code, <fold> pattern_code </fold>) | mu
 
+
 match(source_code, definition_code)  <v-$varName> definition_code </v-$varname> in variableDefinitions | mu
------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 match(source_code, <v-$varName> </v-$varName>) | mu
 
+
 match(source_code, definition_code)  <v-$varName bind="true"> definition_code </v-$varname> in variableDefinitions  $varName unbind in mu | mu
------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 match(source_code, <v-$varName> </v-$varName>) | (mu, $varName -> source_code)
 
+
 <v-$varName bind="true"> definition_code </v-$varname> in variableDefinitions  $varName -> binding_code in mu | mu
-------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
 match(binding_code, <v-$varName> </v-$varName>) | mu
 ```
 
 ## 代码使用方法
 
-代码已上传至GitHub：https://github.com/FancyCoder0/LanguageForCodeSearch
+代码和相关文件已上传至GitHub：https://github.com/FancyCoder0/LanguageForCodeSearch
 
 `src`文件夹是主要的代码，用Java实现。`resources/test`是一些测试用例。
 
@@ -138,3 +164,4 @@ match(binding_code, <v-$varName> </v-$varName>) | mu
 任路遥：这门课让学习到了如何严谨地设计一门语言以及使用类型系统进行推导。这门课既有形式化的定义和推导，也包含了实践编程的内容，将理论与实践结合，让我感受到了编程语言的美妙。这门课也让我对计算机科学，尤其是程序语言领域有了进一步的了解和认识。关于课程本身，我觉得内容安排、考核方式都很合理，但在作业反馈这一块希望助教或者老师能够有更多的反馈。
 
 王文涛：有人问我，有什么课的内容是只能在北大而不能在其他地方学到的。我不假思索地回答这门课。感谢熊老师、胡老师和赵老师的精彩演绎。事实上我一直以来对这个领域很有兴趣，上这门课是我每星期的一大享受。这套理论就如古希腊艺术一样纯净优雅。而各位老师和历史上各位语言的设计者就是艺术家。只可惜这门精美的艺术看起来很少有世人能欣赏。也许就像很多艺术作品一样，在问世时不被重视，要直到多年以后才会被重新认识。但很遗憾我没有勇气做一位这样的艺术家。我似乎更愿意做一个威尼斯商人，用主业资助艺术的创作。关于课程本身，我赞同任路遥的看法，作业反馈是稍有欠缺。
+
