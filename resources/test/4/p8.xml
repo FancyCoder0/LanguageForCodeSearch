@@ -1,48 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="0.9.5" language="C++" filename="p4.cpp">
-
-    <v-hasf2></v-hasf2>
-    <decl_stmt><decl><type><name>int</name></type> <name>s3</name> <init>=
-        <expr>
+    <expr>
+        <abs></abs>
         <call>
-            <name><name>b</name><operator>.</operator><name>getA</name></name><argument_list>()</argument_list>
-        </call><operator>.</operator><call><name>f</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
-
-
-    <var>
-        <v-hasf1>
-            <call>
-                <name>
-                    <abs></abs>
-                    <name>f</name>
-                </name>
-                <argument_list>()</argument_list>
-            </call>
-
-        </v-hasf1>
-
-        <v-hasf2>
-            <call>
-                <name>
-                    <name>
-                        <abs></abs>
-                        <name>f</name>
-                    </name>
-                </name>
-                <argument_list>()</argument_list>
-            </call>
-        </v-hasf2>
-
-        <v-hasf>
-            <udv>
-                <v-hasf1></v-hasf1>
-            </udv>
-            <udv>
-                <v-hasf2></v-hasf2>
-            </udv>
-        </v-hasf>
-    </var>
-
-
+            <name>f</name>
+            <argument_list>()</argument_list>
+        </call>
+    </expr>
 </unit>
 
