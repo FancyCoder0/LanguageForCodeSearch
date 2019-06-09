@@ -105,7 +105,7 @@ match(binding_code, <v-$varName> </v-$varName>) | mu
 
 `src`文件夹是主要的代码，用Java实现。`resources/test`是一些测试用例。
 
-编译运行代码：整个工程使用maven来管理。请使用maven来导入和编译。主入口在`src/main/java/l4cs/Main.java`中。
+编译运行代码：整个工程使用maven来管理。请使用maven来导入和编译。主入口在[src/main/java/l4cs/Main.java](src/main/java/l4cs/Main.java)中。
 
 环境：Java JDK1.8
 
@@ -123,7 +123,7 @@ match(binding_code, <v-$varName> </v-$varName>) | mu
 * `clear`: 清空模式列表。
 * `setpath $PATH`: 将当前路径设为`$PATH`。
 * `add $PATTERN_PATH`: 添加一个模式到模式列表。模式必须以XML文件的形式给出。程序会尝试相对于当前路径或者绝对路径来查找`$PATTERN_PATH`并读入。
-* `search $SOURCE_PATH`: 在给定的源代码中搜索满足模式队列中所有模式的结果。这里，`$SOURCE_PATH`代表带搜索的文件，需要在相对与当前路径或者绝对路径下。这里的文件可以是源代码格式(.c,.cpp,.java后缀)，也可以是已经转换成XML的格式(.xml后缀)。但注意，由于项目依赖于srcML生成代码对应的XML，如果需要新增源代码进行搜索，则需要先使用srcML转成XML或使用提供的脚本`resources/test/getxml.py`适配，但直接使用XML格式的文件则没有该问题。
+* `search $SOURCE_PATH`: 在给定的源代码中搜索满足模式队列中所有模式的结果。这里，`$SOURCE_PATH`代表带搜索的文件，需要在相对与当前路径或者绝对路径下。这里的文件可以是源代码格式(.c,.cpp,.java后缀)，也可以是已经转换成XML的格式(.xml后缀)。但注意，由于项目依赖于srcML生成代码对应的XML，如果需要新增源代码进行搜索，则需要先使用srcML转成XML或使用提供的脚本[resources/test/getxml.py](resources/test/getxml.py)适配，但直接使用XML格式的文件则没有该问题。
 
 举例（绿色为输入的指令）：
 
