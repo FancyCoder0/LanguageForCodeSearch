@@ -103,6 +103,8 @@ match(binding_code, <v-$varName> </v-$varName>) | mu
 
 ## 代码使用方法
 
+代码已上传至GitHub：https://github.com/FancyCoder0/LanguageForCodeSearch
+
 `src`文件夹是主要的代码，用Java实现。`resources/test`是一些测试用例。
 
 编译运行代码：整个工程使用maven来管理。请使用maven来导入和编译。主入口在[src/main/java/l4cs/Main.java](src/main/java/l4cs/Main.java)中。
@@ -128,6 +130,8 @@ match(binding_code, <v-$varName> </v-$varName>) | mu
 举例（绿色为输入的指令）：
 
 ![pic-interface](pic-interface.png)
+
+
 
 ## 课程感想
 
