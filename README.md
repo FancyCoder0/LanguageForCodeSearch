@@ -127,7 +127,7 @@ match(binding_code, <v-$varName> </v-$varName>) | mu
 
 举例（绿色为输入的指令）：
 
-![12EB0FEC-111C-4AD3-AD49-98EB67716C4D](/Users/luyaoren/LanguageForCodeSearch/pic-interface.png)
+![pic-interface](pic-interface.png)
 
 ## 课程感想
 
